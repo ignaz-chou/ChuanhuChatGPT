@@ -60,11 +60,32 @@ APPEARANCE_SWITCHER = """
 
 ONLINE_MODELS = [
     "gpt-3.5-turbo",
+    "gpt-3.5-turbo-0301",
     "gpt-4",
+    "gpt-4-0314",
     "gpt-4-32k",
+    "gpt-4-32k-0314",
+    "川虎助理",
+    "川虎助理 Pro",
+    "xmchat",
+    "yuanai-1.0-base_10B",
+    "yuanai-1.0-translate",
+    "yuanai-1.0-dialog",
+    "yuanai-1.0-rhythm_poems",
+    "minimax-abab4-chat",
+    "minimax-abab5-chat",
 ]
 
 LOCAL_MODELS = [
+    "chatglm-6b",
+    "chatglm-6b-int4",
+    "chatglm-6b-int4-qe",
+    "StableLM",
+    "MOSS",
+    "llama-7b-hf",
+    "llama-13b-hf",
+    "llama-30b-hf",
+    "llama-65b-hf",
 ]
 
 if os.environ.get('HIDE_LOCAL_MODELS', 'false') == 'true':
