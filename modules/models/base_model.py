@@ -149,7 +149,7 @@ class ModelType(Enum):
             model_type = ModelType.YuanAI
         elif "minimax" in model_name_lower:
             model_type = ModelType.Minimax
-        elif "秋水助理" in model_name_lower:
+        elif "川虎助理" in model_name_lower:
             model_type = ModelType.ChuanhuAgent
         else:
             model_type = ModelType.Unknown

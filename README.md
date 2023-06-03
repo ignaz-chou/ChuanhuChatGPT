@@ -3,7 +3,7 @@
   简体中文 | <a title="English" href="./readme/README_en.md">English</a> | <a title="Japanese" href="./readme/README_ja.md">日本語</a>
 </div>
 
-<h1 align="center">秋水 Chat 🐯 Chuanhu Chat</h1>
+<h1 align="center">川虎 Chat 🐯 Chuanhu Chat</h1>
 <div align="center">
   <a href="https://github.com/GaiZhenBiao/ChuanhuChatGPT">
     <img src="https://user-images.githubusercontent.com/70903329/227087087-93b37d64-7dc3-4738-a518-c1cf05591c8a.png" alt="Logo" height="156">
@@ -26,6 +26,13 @@
         渲染LaTeX / 渲染表格 / 代码高亮 / 自动亮暗色切换 / 自适应界面 / “小而美”的体验 <br />
         自定义api-Host / 多参数可调 / 多API Key均衡负载 / 多用户显示 / 适配GPT-4 / 支持本地部署LLM
       </p>
+      <a href="https://www.bilibili.com/video/BV1mo4y1r7eE"><strong>视频教程</strong></a>
+        ·
+      <a href="https://www.bilibili.com/video/BV1184y1w7aP"><strong>2.0介绍视频</strong></a>
+	||
+      <a href="https://huggingface.co/spaces/JohnSmith9982/ChuanhuChatGPT"><strong>在线体验</strong></a>
+      	·
+      <a href="https://huggingface.co/login?next=%2Fspaces%2FJohnSmith9982%2FChuanhuChatGPT%3Fduplicate%3Dtrue"><strong>一键部署</strong></a>
     </p>
     <p align="center">
       <img alt="Animation Demo" src="https://user-images.githubusercontent.com/51039745/226255695-6b17ff1f-ea8d-464f-b69b-a7b6b68fffe8.gif" />
@@ -77,7 +84,7 @@ pip install -r requirements.txt
 python ChuanhuChatbot.py
 ```
 
-一个浏览器窗口将会自动打开，此时您将可以使用 **秋水Chat** 与ChatGPT或其他模型进行对话。
+一个浏览器窗口将会自动打开，此时您将可以使用 **川虎Chat** 与ChatGPT或其他模型进行对话。
 
 > **Note**
 >
