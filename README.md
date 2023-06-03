@@ -118,7 +118,23 @@ python ChuanhuChatbot.py
 - [二次开发许可？](https://github.com/GaiZhenbiao/ChuanhuChatGPT/wiki/使用许可)
 - [如何引用项目？](https://github.com/GaiZhenbiao/ChuanhuChatGPT/wiki/使用许可#如何引用该项目)
 
+## Starchart
 
-修改日期-2023年6月3日
-来源:ChuanhuChatGPT,附原始链接
-https://github.com/GaiZhenbiao/ChuanhuChatGPT
+[![Star History Chart](https://api.star-history.com/svg?repos=GaiZhenbiao/ChuanhuChatGPT&type=Date)](https://star-history.com/#GaiZhenbiao/ChuanhuChatGPT&Date)
+
+## Contributors
+
+<a href="https://github.com/GaiZhenbiao/ChuanhuChatGPT/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=GaiZhenbiao/ChuanhuChatGPT" />
+</a>
+
+## 捐款
+
+🐯如果觉得这个软件对你有所帮助，欢迎请作者喝可乐、喝咖啡～
+
+联系作者：请去[我的bilibili账号](https://space.bilibili.com/29125536)私信我。
+
+<a href="https://www.buymeacoffee.com/ChuanhuChat" ><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=ChuanhuChat&button_colour=219d53&font_colour=ffffff&font_family=Poppins&outline_colour=ffffff&coffee_colour=FFDD00" alt="Buy Me A Coffee" width="250"></a>
+
+
+<img width="250" alt="image" src="https://user-images.githubusercontent.com/51039745/226920291-e8ec0b0a-400f-4c20-ac13-dafac0c3aeeb.JPG">
