@@ -42,9 +42,9 @@ CONCURRENT_COUNT = 100 # 允许同时使用的用户数量
 SIM_K = 5
 INDEX_QUERY_TEMPRATURE = 1.0
 
-CHUANHU_TITLE = i18n("川虎Chat 🚀")
+CHUANHU_TITLE = i18n("秋水Chat 🚀")
 
-CHUANHU_DESCRIPTION = i18n("由Bilibili [土川虎虎虎](https://space.bilibili.com/29125536)、[明昭MZhao](https://space.bilibili.com/24807452) 和 [Keldos](https://github.com/Keldos-Li) 开发<br />访问川虎Chat的 [GitHub项目](https://github.com/GaiZhenbiao/ChuanhuChatGPT) 下载最新版脚本")
+CHUANHU_DESCRIPTION = i18n("")
 
 FOOTER = """<div class="versions">{versions}</div>"""
 
@@ -84,11 +84,8 @@ for dir_name in os.listdir("models"):
 
 MODEL_TOKEN_LIMIT = {
     "gpt-3.5-turbo": 4096,
-    "gpt-3.5-turbo-0301": 4096,
     "gpt-4": 8192,
-    "gpt-4-0314": 8192,
     "gpt-4-32k": 32768,
-    "gpt-4-32k-0314": 32768
 }
 
 TOKEN_OFFSET = 1000 # 模型的token上限减去这个值，得到软上限。到达软上限之后，自动尝试减少token占用。
