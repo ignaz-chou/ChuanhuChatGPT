@@ -247,13 +247,14 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                     with gr.Accordion(i18n("网络设置"), open=False):
                         # 优先展示自定义的api_host
                         apihostTxt = gr.Textbox(
-                            show_label=True,
+                            visible=False,
+                            show_label=False,
                             placeholder=i18n("在这里输入API-Host..."),
                             label="API-Host",
                             value=config.api_host or shared.API_HOST,
                             lines=1,
                         )
-                        changeAPIURLBtn = gr.Button(i18n("🔄 切换API地址"))
+                        # changeAPIURLBtn = gr.Button(i18n("🔄 切换API地址"))
                         proxyTxt = gr.Textbox(
                             show_label=True,
                             placeholder=i18n("在这里输入代理地址..."),
@@ -444,12 +445,16 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
     default_btn.click(
         reset_default, [], [apihostTxt, proxyTxt, status_display], show_progress=True
     )
-    changeAPIURLBtn.click(
-        change_api_host,
-        [apihostTxt],
-        [status_display],
-        show_progress=True,
-    )
+    # #去除对默认host的更改
+    # default_btn.click(
+    #     reset_default, [], [ proxyTxt, status_display], show_progress=True
+    # )
+    # changeAPIURLBtn.click(
+    #     change_api_host,
+    #     [apihostTxt],
+    #     [status_display],
+    #     show_progress=True,
+    # )
     changeProxyBtn.click(
         change_proxy,
         [proxyTxt],
