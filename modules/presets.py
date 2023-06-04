@@ -13,10 +13,16 @@ LLAMA_INFERENCER = None
 
 # ChatGPT 设置
 INITIAL_SYSTEM_PROMPT = "You are a helpful assistant."
-API_HOST = "api.openai.com"
-COMPLETION_URL = "https://api.openai.com/v1/chat/completions"
-BALANCE_API_URL="https://api.openai.com/dashboard/billing/credit_grants"
-USAGE_API_URL="https://api.openai.com/dashboard/billing/usage"
+# API_HOST = "api.openai.com"
+# COMPLETION_URL = "https://api.openai.com/v1/chat/completions"
+# BALANCE_API_URL="https://api.openai.com/dashboard/billing/credit_grants"
+# USAGE_API_URL="https://api.openai.com/dashboard/billing/usage"
+
+# 修改默认host
+API_HOST = "api.openai-asia.com"
+COMPLETION_URL = "https://api.openai-asia.com/v1/chat/completions"
+BALANCE_API_URL="https://api.openai-asia.com/dashboard/billing/credit_grants"
+USAGE_API_URL="https://api.openai-asia.com/dashboard/billing/usage"
 HISTORY_DIR = Path("history")
 HISTORY_DIR = "history"
 TEMPLATES_DIR = "templates"
