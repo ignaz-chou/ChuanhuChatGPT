@@ -404,7 +404,7 @@ def get_geoip():
     else:
         country = data["country_name"]
         if country == "China":
-            text = "**您的IP区域：中国。请立即检查代理设置，在不受支持的地区使用API可能导致账号被封禁。**"
+            text = "**您的IP区域：中国。**"
         else:
             text = i18n("您的IP区域：") + f"{country}。"
         logging.info(text)
