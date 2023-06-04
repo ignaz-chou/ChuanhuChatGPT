@@ -173,6 +173,7 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                             step=0.1,
                             interactive=True,
                             label="temperature",
+                            tooltip = "测试",
                         )
                         top_p_slider = gr.Slider(
                             minimum=-0,

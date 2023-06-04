@@ -78,6 +78,8 @@ class OpenAIClient(BaseLLMModel):
         return input_token_count
 
     def billing_info(self):
+        #不显示账单信息
+        return ""
         try:
             curr_time = datetime.datetime.now()
             last_day_of_month = get_last_day_of_month(
