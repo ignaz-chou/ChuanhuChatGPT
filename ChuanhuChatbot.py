@@ -78,15 +78,17 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                     if multi_api_key:
                         usageTxt = gr.Markdown(i18n("多账号模式已开启，无需输入key，可直接开始对话"), elem_id="usage_display", elem_classes="insert_block")
                     else:
-                        usageTxt = gr.Markdown(i18n("**发送消息** 或 **提交key** 以显示额度"), elem_id="usage_display", elem_classes="insert_block")
+                        usageTxt = gr.Markdown(i18n("请在此填入**api_key**后再运行"), elem_id="usage_display", elem_classes="insert_block")
                     model_select_dropdown = gr.Dropdown(
                         label=i18n("选择模型"), choices=MODELS, multiselect=False, value=MODELS[DEFAULT_MODEL], interactive=True
                     )
                     lora_select_dropdown = gr.Dropdown(
                         label=i18n("选择LoRA模型"), choices=[], multiselect=False, interactive=True, visible=False
                     )
+                    modelTipTxt = gr.Markdown(i18n("**普通用户**只可使用gpt-3.5-turbo模型\n,**高级用户**可以使用gbt-4与gpt-4-32k模型，gpt-4效果更好但是**很贵**，是gpt-3.5-trubo的**20-40倍**，gpt-4-32k可支持更长的内容（约16000汉字），但价格比GPT-4**再翻倍**。"), elem_id="modelTip", elem_classes="insert_block")
                     with gr.Row():
                         single_turn_checkbox = gr.Checkbox(label=i18n("单轮对话"), value=False)
+                        single_turn_txt =  gr.Markdown(i18n("为了实现上下文功能，每次对话后台会自动将之前几次的聊天内容再发送一遍，会造成更多的字数损耗。如果不需要联系上下文功能，勾选**单独会话**即可，**比较省钱**"), elem_id="single_turn_txt", elem_classes="insert_block")
                         #停用在线搜索
                         use_websearch_checkbox = gr.Checkbox(label=i18n("使用在线搜索"), value=False,visible=False,)
                         # render_latex_checkbox = gr.Checkbox(label=i18n("渲染LaTeX公式"), value=render_latex, interactive=True, elem_id="render_latex_checkbox")

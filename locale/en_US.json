@@ -7,7 +7,7 @@
     "🗑️ 删除最新对话": "🗑️ Delete latest dialog",
     "模型": "Model",
     "多账号模式已开启，无需输入key，可直接开始对话": "Multi-account mode is enabled, no need to enter key, you can start the dialogue directly",
-    "**发送消息** 或 **提交key** 以显示额度": "**Send message** or **Submit key** to display credit",
+    "请在此填入**api_key**后再运行": "Please enter your **api_key** here and run again",
     "选择模型": "Select Model",
     "选择LoRA模型": "Select LoRA Model",
     "实时传输回答": "Stream output",
