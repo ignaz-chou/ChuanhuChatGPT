@@ -494,7 +494,7 @@ def versions_html():
          • 
         Gradio: {gr.__version__}
          • 
-        <a style="text-decoration:none;color:inherit" href="">qiushuiChat</a>: {commit_info}
+        <a style="text-decoration:none;color:inherit" href="">qiushuiChat-1.01</a>: {commit_info}
         """
 
 def add_source_numbers(lst, source_name = "Source", use_source = True):
