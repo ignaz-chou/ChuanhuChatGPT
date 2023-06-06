@@ -48,7 +48,7 @@ CONCURRENT_COUNT = 100 # 允许同时使用的用户数量
 SIM_K = 5
 INDEX_QUERY_TEMPRATURE = 1.0
 
-CHUANHU_TITLE = i18n("秋水Chat 🚀易县青年企业家协会内部特供版")
+CHUANHU_TITLE = i18n("秋水Chat 🚀易县青企协内部特供版")
 
 CHUANHU_DESCRIPTION = i18n("")
 
