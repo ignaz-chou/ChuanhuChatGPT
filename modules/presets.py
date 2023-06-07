@@ -30,6 +30,7 @@ TEMPLATES_DIR = "templates"
 # 错误信息
 STANDARD_ERROR_MSG = i18n("☹️发生了错误：")  # 错误信息的标准前缀
 GENERAL_ERROR_MSG = i18n("获取对话时发生错误，请查看后台日志")
+SWITCH_ERROR_MSG = i18n("链接错误，已尝试切换至备用线路，请联系管理员重启服务器后再次尝试。若多次重启未果请联系运维人员")
 ERROR_RETRIEVE_MSG = i18n("请检查网络连接，或者API-Key是否有效。")
 CONNECTION_TIMEOUT_MSG = i18n("连接超时，无法获取对话。")  # 连接超时
 READ_TIMEOUT_MSG = i18n("读取超时，无法获取对话。")  # 读取超时

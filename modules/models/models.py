@@ -24,7 +24,7 @@ from ..presets import *
 from ..index_func import *
 from ..utils import *
 from .. import shared
-from ..config import retrieve_proxy, usage_limit
+from ..config import retrieve_proxy, usage_limit, trySwitchToBackLine
 from modules import config
 from .base_model import BaseLLMModel, ModelType
 
@@ -59,7 +59,8 @@ class OpenAIClient(BaseLLMModel):
                 partial_text += i
                 yield partial_text
         else:
-            yield STANDARD_ERROR_MSG + GENERAL_ERROR_MSG
+            trySwitchToBackLine()
+            yield STANDARD_ERROR_MSG + SWITCH_ERROR_MSG
 
     def get_answer_at_once(self):
         response = self._get_response()

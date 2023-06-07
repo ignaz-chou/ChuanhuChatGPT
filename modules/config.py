@@ -81,7 +81,6 @@ if os.environ.get("dockerrun") == "yes":
 ## 处理 api-key 以及 允许的用户列表
 my_api_key = config.get("openai_api_key", "")
 my_api_key = os.environ.get("OPENAI_API_KEY", my_api_key)
-
 xmchat_api_key = config.get("xmchat_api_key", "")
 os.environ["XMCHAT_API_KEY"] = xmchat_api_key
 
@@ -171,6 +170,35 @@ def retrieve_proxy(proxy=None):
         # return old proxy
         os.environ["HTTP_PROXY"], os.environ["HTTPS_PROXY"] = old_var
 
+
+def trySwitchToBackLine():
+    logging.info("正在尝试切换至备用线路")
+    if os.path.exists("lines.json"):
+        with open("lines.json", "r", encoding='utf-8') as f:
+            lines = json.load(f)
+            lines_length = len(lines)
+            default_api_base_index = config.get("default_api_base_index", None)
+            
+            index = default_api_base_index or 0
+            print("INDEX",index)
+            index = (index +1) % lines_length
+            print("NEXINDEX",index)
+            config["default_api_base_index"] = index
+            config["openai_api_base"] = lines[index]
+            with open("config.json", "w", encoding='utf-8') as f:
+                json.dump(config, f, indent=4)
+            logging.info(f"已切换至备用线路{index+1}，清重启服务器，共计有{lines_length}条线路,如果几条线路尝试均失败，请联系运维人员")
+
+           
+    else:
+    # if os.path.exists("lines.json"):
+    #     logging.info("检测到api_base_back.txt文件，正在进行迁移...")
+    #     with open("api_base_back.txt", "r") as f:
+    #         config["openai_api_base"] = f.read().strip()
+    #     os.rename("api_base_back.txt", "api_base_back(deprecated).txt")
+    #     with open("config.json", "w", encoding='utf-8') as f:
+    #         json.dump(config, f, indent=4)
+        logging.info("切换至备用线路失败，请联系运维人员")
 
 ## 处理advance docs
 advance_docs = defaultdict(lambda: defaultdict(dict))
