@@ -49,6 +49,14 @@ if os.path.exists("api_key.txt"):
     with open("config.json", "w", encoding='utf-8') as f:
         json.dump(config, f, indent=4)
 
+if os.path.exists("api_base_back.txt"):
+    logging.info("检测到api_base_back.txt文件，正在进行迁移...")
+    with open("api_base_back.txt", "r") as f:
+        config["openai_api_base"] = f.read().strip()
+    os.rename("api_base_back.txt", "api_base_back(deprecated).txt")
+    with open("config.json", "w", encoding='utf-8') as f:
+        json.dump(config, f, indent=4)
+
 if os.path.exists("auth.json"):
     logging.info("检测到auth.json文件，正在进行迁移...")
     auth_list = []
