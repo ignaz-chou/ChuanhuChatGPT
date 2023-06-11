@@ -41,21 +41,25 @@ language = os.environ.get("LANGUAGE", lang_config)
 
 hide_history_when_not_logged_in = config.get("hide_history_when_not_logged_in", False)
 
-if os.path.exists("api_key.txt"):
-    logging.info("检测到api_key.txt文件，正在进行迁移...")
-    with open("api_key.txt", "r") as f:
-        config["openai_api_key"] = f.read().strip()
-    os.rename("api_key.txt", "api_key(deprecated).txt")
-    with open("config.json", "w", encoding='utf-8') as f:
-        json.dump(config, f, indent=4)
 
-if os.path.exists("api_base_back.txt"):
-    logging.info("检测到api_base_back.txt文件，正在进行迁移...")
-    with open("api_base_back.txt", "r") as f:
-        config["openai_api_base"] = f.read().strip()
-    os.rename("api_base_back.txt", "api_base_back(deprecated).txt")
-    with open("config.json", "w", encoding='utf-8') as f:
-        json.dump(config, f, indent=4)
+
+def file_migration_and_config_update(file_name, config_key, config):
+    deprecated_file_name = file_name + "(deprecated)"
+    if os.path.exists(file_name):
+        logging.info(f"检测到{file_name}文件，正在进行迁移...")
+        with open(file_name, "r") as f:
+            config[config_key] = f.read().strip()
+        os.rename(file_name, deprecated_file_name)
+        with open("config.json", "w", encoding='utf-8') as f:
+            json.dump(config, f, indent=4)
+        logging.info(f"{file_name}文件迁移完成，已重命名为{deprecated_file_name}。")
+    else:
+        logging.info(f"{file_name}文件不存在，跳过迁移。")
+
+# 使用方法，直接调用函数，传入文件名和对应的配置键值
+file_migration_and_config_update("api_key.txt", "openai_api_key", config)
+file_migration_and_config_update("api_base_back.txt", "openai_api_base", config)
+
 
 if os.path.exists("auth.json"):
     logging.info("检测到auth.json文件，正在进行迁移...")
