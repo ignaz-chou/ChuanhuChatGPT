@@ -13,6 +13,14 @@ from modules.overwrites import *
 from modules.models.models import get_model
 
 
+# 获取命令行参数
+arguments = sys.argv[1:]  
+##通过bat命令的参数决定是否作为局域网服务器使用
+if len(arguments) >= 1:
+    for_lan_server = arguments[0]
+    if for_lan_server == "True":
+        server_name = config.get_ip_address()
+
 gr.Chatbot._postprocess_chat_messages = postprocess_chat_messages
 gr.Chatbot.postprocess = postprocess
 
@@ -176,7 +184,6 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                             step=0.1,
                             interactive=True,
                             label="temperature",
-                            tooltip = "测试",
                         )
                         top_p_slider = gr.Slider(
                             minimum=-0,
