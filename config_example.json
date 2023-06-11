@@ -47,6 +47,7 @@
     // 如果使用自定义端口、自定义ip，请取消注释并替换对应内容
     // "server_name": "0.0.0.0",
     // "server_port": 7860,
+    //"LAN_server" : true, //开启时，默认自动获取本机IP地址，作为局域网服务器来部署
     // 如果要share到gradio，设置为true
     // "share": false,
 }

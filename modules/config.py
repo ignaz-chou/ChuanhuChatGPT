@@ -213,6 +213,24 @@ def update_doc_config(two_column_pdf):
 
     logging.info(f"更新后的文件参数为：{advance_docs}")
 
+
+
+
+import socket
+
+##获取当前电脑的IP地址
+def get_ip_address():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.255.255.255', 1))
+        IP = s.getsockname()[0]
+    except Exception:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
+
 ## 处理gradio.launch参数
 server_name = config.get("server_name", None)
 server_port = config.get("server_port", None)
@@ -221,6 +239,12 @@ if server_name is None:
         server_name = "0.0.0.0"
     else:
         server_name = "127.0.0.1"
+
+# 作为局域网服务器
+LAN_server = config.get("LAN_server", None)
+if LAN_server:
+    server_name = get_ip_address()
+
 if server_port is None:
     if dockerflag:
         server_port = 7860
