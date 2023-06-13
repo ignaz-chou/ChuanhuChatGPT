@@ -1,5 +1,7 @@
 [
     "https://api.openai-asia.com",
     "https://api.closeai-asia.com",
+    "https://api.openai-proxy.org",
+    "https://api.closeai-proxy.xyz",
     "https://api.openai-azure.com"
 ]
