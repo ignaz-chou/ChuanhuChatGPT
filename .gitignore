@@ -146,3 +146,7 @@ lora/
 templates/*
 create.py
 output.txt
+api_key(deprecated).txt
+config - 副本.json
+input.txt
+test.py
