@@ -46,6 +46,9 @@ hide_history_when_not_logged_in = config.get("hide_history_when_not_logged_in", 
 def file_migration_and_config_update(file_name, config_key, config):
     deprecated_file_name = file_name + "(deprecated)"
     if os.path.exists(file_name):
+        if os.path.exists(deprecated_file_name):
+             os.remove(deprecated_file_name)
+             print(f"{deprecated_file_name}文件已成功删除！")
         logging.info(f"检测到{file_name}文件，正在进行迁移...")
         with open(file_name, "r") as f:
             config[config_key] = f.read().strip()
