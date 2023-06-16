@@ -40,6 +40,9 @@ var forView_i18n = {
 };
 
 // gradio 页面加载好了么??? 我能动你的元素了么??
+// 定义了 gradioLoaded 函数，这个函数通过检查不同的元素是否已经加载完成来进行不同的操作，
+// 例如 adjustDarkMode, selectHistory, getUserInfo 等。
+// 这些操作涉及到一些元素的可视化设置、用户输入历史的获取、用户信息的获取等。
 function gradioLoaded(mutations) {
     for (var i = 0; i < mutations.length; i++) {
         if (mutations[i].addedNodes.length) {
@@ -90,7 +93,7 @@ function gradioLoaded(mutations) {
         }
     }
 }
-
+// webLocale 函数定义了对于不同语言的处理方式，将 forView_i18n 对象中对应的语言设置到页面的样式中。
 function webLocale() {
     console.log("webLocale", language);
     if (forView_i18n.hasOwnProperty(language)) {
@@ -101,7 +104,8 @@ function webLocale() {
         // console.log("added forViewStyle", forView);
     }
 }
-
+// selectHistory 函数则是在文本输入框 user_input_ta 中添加了对键盘按键的监听。
+// 当按下方向键时，它将在用户的输入历史中切换显示内容。当按下 Enter 键时，将当前的输入内容加入到历史记录中。
 function selectHistory() {
     user_input_ta = user_input_tb.querySelector("textarea");
     if (user_input_ta) {
@@ -151,6 +155,7 @@ function selectHistory() {
 }
 
 var username = null;
+// getUserInfo 函数用于获取用户信息，并存储到本地存储中。
 function getUserInfo() {
     if (usernameGotten) {
         return;
@@ -177,7 +182,7 @@ function getUserInfo() {
         }
     }
 }
-
+// 这两个函数用于控制用户信息的显示和隐藏。
 function toggleUserInfoVisibility(shouldHide) {
     if (userInfoDiv) {
         if (shouldHide) {
@@ -242,7 +247,6 @@ function showOrHideUserInfo() {
         toggleUserInfoVisibility(true);
     }, 2000);
 }
-
 function toggleDarkMode(isEnabled) {
     if (isEnabled) {
         document.body.classList.add("dark");
@@ -252,6 +256,9 @@ function toggleDarkMode(isEnabled) {
         // document.body.style.backgroundColor = "";
     }
 }
+
+// adjustDarkMode(): 此函数用于切换浏览器的颜色模式。
+// 它检测用户是否偏好深色模式，并根据此设置开关的状态。同时，它还监听了颜色模式的改变。
 function adjustDarkMode() {
     const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -268,7 +275,8 @@ function adjustDarkMode() {
         toggleDarkMode(e.target.checked);
     });
 }
-
+// setChatbotHeight(): 此函数用于设置聊天机器人的高度。
+// 根据屏幕宽度以及是否在iframe内，它会调整机器人和包裹容器的高度。
 function setChatbotHeight() {
     const screenWidth = window.innerWidth;
     const statusDisplay = document.querySelector('#status_display');
@@ -292,12 +300,15 @@ function setChatbotHeight() {
         }
     }
 }
+// setChatbotScroll(): 此函数用于将聊天机器人的滚动条滚动到底部。
 function setChatbotScroll() {
     var scrollHeight = chatbotWrap.scrollHeight;
     chatbotWrap.scrollTo(0,scrollHeight)
 }
 var rangeInputs = null;
 var numberInputs = null;
+// setSlider(): 此函数用于设置范围输入元素（滑块）的样式。
+// 它监听滑块和数字输入框的输入事件，并设置滑块的背景大小以反映其当前的值。
 function setSlider() {
     rangeInputs = document.querySelectorAll('input[type="range"]');
     numberInputs = document.querySelectorAll('input[type="number"]')
@@ -309,13 +320,16 @@ function setSlider() {
         numberInput.addEventListener('input', setSliderRange);
     })
 }
+
 function setSliderRange() {
     var range = document.querySelectorAll('input[type="range"]');
     range.forEach(range => {
         range.style.backgroundSize = (range.value - range.min) / (range.max - range.min) * 100 + '% 100%';
     });
 }
-
+// addChuanhuButton(): 此函数用于向机器人消息中添加两个按钮。
+// 第一个按钮是复制按钮，它将复制原始消息到剪贴板。
+// 第二个按钮是切换按钮，用于在markdown渲染的消息和原始消息之间切换。
 function addChuanhuButton(botElement) {
     var rawMessage = null;
     var mdMessage = null;
@@ -376,7 +390,7 @@ function addChuanhuButton(botElement) {
     });
     botElement.insertBefore(toggleButton, copyButton);
 }
-
+// addCopyCodeButton(): 此函数用于向pre元素（通常用于显示代码）添加一个复制按钮。
 function addCopyCodeButton(pre) {
     var code = null;
     var firstChild = null;
@@ -412,6 +426,7 @@ function addCopyCodeButton(pre) {
     });
 }
 
+// renderMarkdownText() 和 removeMarkdownText(): 这两个函数用于在消息的原始文本和其markdown渲染的版本之间切换。
 function renderMarkdownText(message) {
     var mdDiv = message.querySelector('.md-message');
     if (mdDiv) mdDiv.classList.remove('hideM');
@@ -427,7 +442,7 @@ function removeMarkdownText(message) {
 
 var rendertime = 0; // for debugging
 var mathjaxUpdated = false;
-
+// renderMathJax() 将渲染所有尚未渲染的公式，
 function renderMathJax() {
     messageBotDivs = document.querySelectorAll('.message.bot .md-message');
     for (var i = 0; i < messageBotDivs.length; i++) {
@@ -441,7 +456,7 @@ function renderMathJax() {
     mathjaxUpdated = true;
     // console.log("MathJax Rendered")
 }
-
+// removeMathjax() 将删除所有渲染的公式
 function removeMathjax() {
     // var jax = MathJax.Hub.getAllJax();
     // for (var i = 0; i < jax.length; i++) {
@@ -453,7 +468,7 @@ function removeMathjax() {
     mathjaxUpdated = true;
     // console.log("MathJax removed!");
 }
-
+// updateMathJax() 根据是否应该渲染LaTeX公式来调用这两个函数。
 function updateMathJax() {
     // renderLatex.addEventListener("change", function() {
     //     shouldRenderLatex = renderLatex.checked;
@@ -480,6 +495,9 @@ let timeoutId;
 let isThrottled = false;
 var mmutation
 // 监听所有元素中 bot message 的变化，用来查找需要渲染的mathjax, 并为 bot 消息添加复制按钮。
+// MutationObserver: 它用来监听页面的DOM变化，特别是聊天机器人消息的增加和移除。
+// 当一个消息被添加或移除时，代码会执行各种功能，
+// 例如渲染MathJax（用于显示数学表达式），将聊天历史保存到本地存储，添加复制文本的按钮，以及处理DOM的其他变化。
 var mObserver = new MutationObserver(function (mutationsList) {
     for (mmutation of mutationsList) {
         if (mmutation.type === 'childList') {
@@ -530,12 +548,15 @@ var mObserver = new MutationObserver(function (mutationsList) {
 mObserver.observe(document.documentElement, { attributes: true, childList: true, subtree: true });
 
 var loadhistorytime = 0; // for debugging
+// saveHistoryHtml: 这个函数用于保存聊天历史。它首先获取聊天记录，然后将其保存在localStorage中。
 function saveHistoryHtml() {
     var historyHtml = document.querySelector('#chuanhu_chatbot > .wrap');
     localStorage.setItem('chatHistory', historyHtml.innerHTML);
     // console.log("History Saved")
     historyLoaded = false;
 }
+// loadHistoryHtml: 这个函数用于加载聊天历史。
+// 它首先从localStorage中获取聊天记录。如果用户未登录且有历史记录，则将历史记录添加到聊天窗口中，并将其中的按钮移除。
 function loadHistoryHtml() {
     var historyHtml = localStorage.getItem('chatHistory');
     if (!historyHtml) {
@@ -570,6 +591,8 @@ function loadHistoryHtml() {
         historyLoaded = false;
     }
 }
+// clearHistoryHtml: 这个函数用于清除聊天历史。
+// 它从localStorage中移除聊天记录，并从聊天窗口中移除历史消息。
 function clearHistoryHtml() {
     localStorage.removeItem("chatHistory");
     historyMessages = chatbotWrap.querySelector('.history-message');
@@ -578,6 +601,7 @@ function clearHistoryHtml() {
         console.log("History Cleared");
     }
 }
+// emptyHistory: 这个函数用于清空聊天历史。它将clearHistoryHtml函数绑定到一个按钮的点击事件上。
 function emptyHistory() {
     empty_botton.addEventListener("click", function () {
         clearHistoryHtml();
