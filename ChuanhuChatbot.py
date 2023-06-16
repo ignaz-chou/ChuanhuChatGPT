@@ -39,6 +39,7 @@ logging.info(
 # 默认开启本地服务器，默认可以直接从IP访问，默认不创建公开分享链接
 demo.title = i18n("秋水Chat 🚀")
 
+
 if __name__ == "__main__":
     reload_javascript()
     demo.queue(concurrency_count=CONCURRENT_COUNT).launch(
@@ -50,6 +51,3 @@ if __name__ == "__main__":
         favicon_path="./assets/favicon.ico",
         inbrowser=not dockerflag, # 禁止在docker下开启inbrowser
     )
-    # demo.queue(concurrency_count=CONCURRENT_COUNT).launch(server_name="0.0.0.0", server_port=7860, share=False) # 可自定义端口
-    # demo.queue(concurrency_count=CONCURRENT_COUNT).launch(server_name="0.0.0.0", server_port=7860,auth=("在这里填写用户名", "在这里填写密码")) # 可设置用户名与密码
-    # demo.queue(concurrency_count=CONCURRENT_COUNT).launch(auth=("在这里填写用户名", "在这里填写密码")) # 适合Nginx反向代理
