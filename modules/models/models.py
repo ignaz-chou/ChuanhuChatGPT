@@ -28,8 +28,9 @@ from ..config import retrieve_proxy, usage_limit, trySwitchToBackLine
 from modules import config
 from .base_model import BaseLLMModel, ModelType
 
-
+# OpenAIClient类，继承自BaseLLMModel
 class OpenAIClient(BaseLLMModel):
+     # 初始化方法，用于设置模型的参数
     def __init__(
         self,
         model_name,
@@ -39,6 +40,7 @@ class OpenAIClient(BaseLLMModel):
         top_p=1.0,
         user_name=""
     ) -> None:
+        # 调用父类的初始化方法
         super().__init__(
             model_name=model_name,
             temperature=temperature,
@@ -46,10 +48,12 @@ class OpenAIClient(BaseLLMModel):
             system_prompt=system_prompt,
             user=user_name
         )
+        # 设置API密钥和其他属性
         self.api_key = api_key
         self.need_api_key = True
-        self._refresh_header()
+        self._refresh_header() # 更新头部信息
 
+    # 获取答案流迭代器方法，可以一直获取到答案直到结束
     def get_answer_stream_iter(self):
         response = self._get_response(stream=True)
         if response is not None:
@@ -62,6 +66,7 @@ class OpenAIClient(BaseLLMModel):
             trySwitchToBackLine()
             yield STANDARD_ERROR_MSG + SWITCH_ERROR_MSG
 
+    # 一次性获取答案的方法 
     def get_answer_at_once(self):
         response = self._get_response()
         response = json.loads(response.text)
@@ -69,6 +74,8 @@ class OpenAIClient(BaseLLMModel):
         total_token_count = response["usage"]["total_tokens"]
         return content, total_token_count
 
+    # 计算输入文本的token数量
+    # TODO:使用openai官方方法来计算
     def count_token(self, user_input):
         input_token_count = count_token(construct_user(user_input))
         if self.system_prompt is not None and len(self.all_token_counts) == 0:
@@ -78,6 +85,7 @@ class OpenAIClient(BaseLLMModel):
             return input_token_count + system_prompt_token_count
         return input_token_count
 
+    # 获取账单信息，这里默认不显示账单信息，但是如果需要可以取消注释进行使用
     def billing_info(self):
         #不显示账单信息
         return ""
@@ -119,9 +127,11 @@ class OpenAIClient(BaseLLMModel):
             logging.error(i18n("获取API使用情况失败:") + str(e))
             return STANDARD_ERROR_MSG + ERROR_RETRIEVE_MSG
 
+    # 设置token的上限，这里暂时没有实现
     def set_token_upper_limit(self, new_upper_limit):
         pass
 
+    # 获取响应的方法，主要用于和API进行交互，获取模型的生成结果
     @shared.state.switching_api_key  # 在不开启多账号模式的时候，这个装饰器不会起作用
     def _get_response(self, stream=False):
         openai_api_key = self.api_key
@@ -166,8 +176,9 @@ class OpenAIClient(BaseLLMModel):
         if shared.state.completion_url != COMPLETION_URL:
             # logging.info(f"使用自定义API URL: {shared.state.completion_url}")
             pass
-
+        print("retrieve_proxy",shared.state.completion_url)
         with retrieve_proxy():
+            print("retrieve_proxy222",shared.state.completion_url)
             try:
                 response = requests.post(
                     shared.state.completion_url,
@@ -180,12 +191,14 @@ class OpenAIClient(BaseLLMModel):
                 return None
         return response
 
+    # 更新请求头的方法
     def _refresh_header(self):
         self.headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.api_key}",
         }
 
+    # 获取账单数据的方法
     def _get_billing_data(self, billing_url):
         with retrieve_proxy():
             response = requests.get(
@@ -202,6 +215,7 @@ class OpenAIClient(BaseLLMModel):
                 f"API request failed with status code {response.status_code}: {response.text}"
             )
 
+    # 解码聊天响应的方法，用于解析模型的生成结果
     def _decode_chat_response(self, response):
         error_msg = ""
         for chunk in response.iter_lines():
@@ -225,18 +239,22 @@ class OpenAIClient(BaseLLMModel):
         if error_msg:
             raise Exception(error_msg)
 
+    # 设置新的API密钥
     def set_key(self, new_access_key):
         ret = super().set_key(new_access_key)
         self._refresh_header()
         return ret
 
-
+# ChatGLM_Client类，继承自BaseLLMModel
 class ChatGLM_Client(BaseLLMModel):
+    # 初始化方法，用于设置模型的参数
     def __init__(self, model_name, user_name="") -> None:
         super().__init__(model_name=model_name, user=user_name)
+        # 这里导入了transformers库中的AutoTokenizer和AutoModel类，以及torch库
         from transformers import AutoTokenizer, AutoModel
         import torch
         global CHATGLM_TOKENIZER, CHATGLM_MODEL
+        # 判断全局变量是否为空，如果为空就加载模型和tokenizer
         if CHATGLM_TOKENIZER is None or CHATGLM_MODEL is None:
             system_name = platform.system()
             model_path = None
@@ -302,7 +320,7 @@ class ChatGLM_Client(BaseLLMModel):
         ):
             yield response
 
-
+# LLaMA_Client类，继承自BaseLLMModel
 class LLaMA_Client(BaseLLMModel):
     def __init__(
         self,
@@ -311,13 +329,16 @@ class LLaMA_Client(BaseLLMModel):
         user_name=""
     ) -> None:
         super().__init__(model_name=model_name, user=user_name)
+        # 此处导入了一些lmflow库中的类
         from lmflow.datasets.dataset import Dataset
         from lmflow.pipeline.auto_pipeline import AutoPipeline
         from lmflow.models.auto_model import AutoModel
         from lmflow.args import ModelArguments, DatasetArguments, InferencerArguments
-
+        # 这里设置了一些属性，例如max_generation_token，end_string等
+        # 这些属性会在后面的方法中被用到
         self.max_generation_token = 1000
         self.end_string = "\n\n"
+        # 这里也判断了一些全局变量是否为空，如果为空就加载模型和inferencer
         # We don't need input data
         data_args = DatasetArguments(dataset_path=None)
         self.dataset = Dataset(data_args)
@@ -518,6 +539,7 @@ class XMChat(BaseLLMModel):
                     "data_type": "imgbase64",
                     "data": self.image_bytes
                 }
+                print("handle_file_upload",self.url)
                 response = requests.post(self.url, json=data)
                 response = json.loads(response.text)
                 logging.info(f"图片回复: {response['data']}")
@@ -534,6 +556,7 @@ class XMChat(BaseLLMModel):
             "data_type": "text",
             "data": question
         }
+        print("get_answer_at_once",self.url)
         response = requests.post(self.url, json=data)
         try:
             response = json.loads(response.text)
@@ -542,25 +565,29 @@ class XMChat(BaseLLMModel):
             return response.text, len(response.text)
 
 
+# 导入模型类型枚举类
 def get_model(
-    model_name,
-    lora_model_path=None,
-    access_key=None,
-    temperature=None,
-    top_p=None,
-    system_prompt=None,
-    user_name=""
-) -> BaseLLMModel:
-    msg = i18n("模型设置为了：") + f" {model_name}"
-    model_type = ModelType.get_type(model_name)
-    lora_selector_visibility = False
-    lora_choices = []
-    dont_change_lora_selector = False
-    if model_type != ModelType.OpenAI:
-        config.local_embedding = True
-    # del current_model.model
-    model = None
-    chatbot = gr.Chatbot.update(label=model_name)
+    model_name,  # 模型名称
+    lora_model_path=None,  # LoRA模型路径，可为空
+    access_key=None,  # 访问密钥，用于一些需要API密钥的模型
+    temperature=None,  # 温度参数，用于调整生成文本的随机性
+    top_p=None,  # 置信度阈值，用于调整生成文本的置信度
+    system_prompt=None,  # 系统提示，可为空
+    user_name=""  # 用户名称，可为空
+) -> BaseLLMModel:  # 返回一个聊天机器人模型实例
+
+    msg = i18n("模型设置为了：") + f" {model_name}"  # 提示消息
+    model_type = ModelType.get_type(model_name)  # 获取模型类型
+    lora_selector_visibility = False  # LoRA模型选择器的可见性，默认为不可见
+    lora_choices = []  # LoRA模型的选择项，默认为空
+    dont_change_lora_selector = False  # 是否改变LoRA模型选择器，默认为不改变
+    if model_type != ModelType.OpenAI:  
+        config.local_embedding = True  
+    # del current_model.model  
+    model = None  # 聊天机器人模型实例，初始为空
+    chatbot = gr.Chatbot.update(label=model_name)  # 创建一个聊天机器人实例
+
+    # 以下是一系列判断模型类型，并根据模型类型创建相应的聊天机器人模型实例
     try:
         if model_type == ModelType.OpenAI:
             logging.info(f"正在加载OpenAI模型: {model_name}")
@@ -625,38 +652,28 @@ def get_model(
     else:
         return model, msg, chatbot, gr.Dropdown.update(choices=lora_choices, visible=lora_selector_visibility)
 
-
+# 主函数，用于测试聊天机器人模型实例的各种功能
 if __name__ == "__main__":
     with open("config.json", "r") as f:
         openai_api_key = cjson.load(f)["openai_api_key"]
-    # set logging level to debug
     logging.basicConfig(level=logging.DEBUG)
-    # client = ModelManager(model_name="gpt-3.5-turbo", access_key=openai_api_key)
     client = get_model(model_name="chatglm-6b-int4")
     chatbot = []
     stream = False
-    # 测试账单功能
     logging.info(colorama.Back.GREEN + "测试账单功能" + colorama.Back.RESET)
     logging.info(client.billing_info())
-    # 测试问答
     logging.info(colorama.Back.GREEN + "测试问答" + colorama.Back.RESET)
     question = "巴黎是中国的首都吗？"
     for i in client.predict(inputs=question, chatbot=chatbot, stream=stream):
         logging.info(i)
     logging.info(f"测试问答后history : {client.history}")
-    # 测试记忆力
     logging.info(colorama.Back.GREEN + "测试记忆力" + colorama.Back.RESET)
     question = "我刚刚问了你什么问题？"
     for i in client.predict(inputs=question, chatbot=chatbot, stream=stream):
         logging.info(i)
     logging.info(f"测试记忆力后history : {client.history}")
-    # 测试重试功能
     logging.info(colorama.Back.GREEN + "测试重试功能" + colorama.Back.RESET)
     for i in client.retry(chatbot=chatbot, stream=stream):
         logging.info(i)
     logging.info(f"重试后history : {client.history}")
-    # # 测试总结功能
-    # print(colorama.Back.GREEN + "测试总结功能" + colorama.Back.RESET)
-    # chatbot, msg = client.reduce_token_size(chatbot=chatbot)
-    # print(chatbot, msg)
-    # print(f"总结后history: {client.history}")
+

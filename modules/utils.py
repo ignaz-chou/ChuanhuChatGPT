@@ -1,4 +1,5 @@
-# -*- coding:utf-8 -*-
+
+# 导入所需的库和模块
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Tuple, Type
 import logging
@@ -28,73 +29,90 @@ from . import shared
 from modules.config import retrieve_proxy, hide_history_when_not_logged_in
 
 if TYPE_CHECKING:
+    # 如果在做类型检查，定义一个类型字典
     from typing import TypedDict
 
     class DataframeData(TypedDict):
         headers: List[str]
         data: List[List[str | int | bool]]
 
+# 调用当前模型进行预测
 def predict(current_model, *args):
     iter = current_model.predict(*args)
     for i in iter:
         yield i
 
+# 获取当前模型的计费信息
 def billing_info(current_model):
     return current_model.billing_info()
 
+# 设置当前模型的关键字
 def set_key(current_model, *args):
     return current_model.set_key(*args)
 
+# 加载聊天历史
 def load_chat_history(current_model, *args):
     return current_model.load_chat_history(*args)
 
+# 中断当前模型
 def interrupt(current_model, *args):
     return current_model.interrupt(*args)
 
+# 重置当前模型
 def reset(current_model, *args):
     return current_model.reset(*args)
 
+# 尝试重新操作当前模型
 def retry(current_model, *args):
     iter = current_model.retry(*args)
     for i in iter:
         yield i
 
+# 删除第一段对话
 def delete_first_conversation(current_model, *args):
     return current_model.delete_first_conversation(*args)
 
+# 删除最后一段对话
 def delete_last_conversation(current_model, *args):
     return current_model.delete_last_conversation(*args)
 
+# 设置系统提示
 def set_system_prompt(current_model, *args):
     return current_model.set_system_prompt(*args)
 
+# 保存聊天历史
 def save_chat_history(current_model, *args):
     return current_model.save_chat_history(*args)
 
+# 导出markdown
 def export_markdown(current_model, *args):
     return current_model.export_markdown(*args)
 
-def load_chat_history(current_model, *args):
-    return current_model.load_chat_history(*args)
-
+# 上传聊天历史
 def upload_chat_history(current_model, *args):
     return current_model.load_chat_history(*args)
 
+# 设置令牌上限
 def set_token_upper_limit(current_model, *args):
     return current_model.set_token_upper_limit(*args)
 
+# 设置温度
 def set_temperature(current_model, *args):
     current_model.set_temperature(*args)
 
+# 设置top_p值
 def set_top_p(current_model, *args):
     current_model.set_top_p(*args)
 
+# 设置选项数量
 def set_n_choices(current_model, *args):
     current_model.set_n_choices(*args)
 
+# 设置停止序列
 def set_stop_sequence(current_model, *args):
     current_model.set_stop_sequence(*args)
 
+# 设置最大令牌数
 def set_max_tokens(current_model, *args):
     current_model.set_max_tokens(*args)
 

@@ -27,5 +27,5 @@ fi
 # 检查ChuanhuChatbot.py是否在运行
 if ! pgrep -f ChuanhuChatbot.py > /dev/null; then
 	# 如果没有运行，启动服务器
-	nohup python3 ChuanhuChatbot.py &
+	nohup python3.10 ChuanhuChatbot.py &
 fi

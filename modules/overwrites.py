@@ -9,7 +9,8 @@ from modules.presets import *
 from modules.index_func import *
 from modules.config import render_latex
 
-
+# postprocess函数是用来处理聊天机器人的输出的。它接收一个参数y，这个参数是一个包含机器人和用户之间的对话信息的列表。
+# 这个函数的主要作用是对这个对话信息进行处理，处理完成后的信息包含HTML格式的字符串或包含媒体信息的字典。
 def postprocess(
         self,
         y: List[List[str | Tuple[str] | Tuple[str, str] | None] | Tuple],
@@ -39,6 +40,10 @@ def postprocess(
             )
         return processed_messages
 
+
+# postprocess_chat_messages函数是postprocess函数的辅助函数，它专门处理一条聊天信息。这个函数会检查聊天信息的类型，并根据类型进行相应的处理。
+# 如果聊天信息是一个媒体文件的路径，那么它会把这个路径转换成一个包含文件名、MIME类型、备选文本和其他信息的字典。
+# 如果聊天信息是一个字符串，那么它会把这个字符串转换成HTML格式。否则，它会抛出一个错误。
 def postprocess_chat_messages(
         self, chat_message: str | Tuple | List | None, message_type: str
     ) -> str | Dict | None:
@@ -72,6 +77,10 @@ with open("./assets/custom.js", "r", encoding="utf-8") as f, \
     externalScripts = f1.read()
 
 
+# reload_javascript函数是用来重新加载JavaScript代码的。这个函数首先会把customJS和externalScripts两个变量的内容拼接成一个HTML <script>标签。
+# 然后，如果配置了需要渲染LaTeX公式，那么它还会添加MathJax库的代码。
+# 最后，它会重写Gradio库的TemplateResponse类，把这些JavaScript代码插入到返回的HTML页面中。
+# 这样，每当返回一个新的页面时，这些JavaScript代码都会被重新加载。
 def reload_javascript():
     print("Reloading javascript...")
     js = f'<script>{customJS}</script><script async>{externalScripts}</script>'

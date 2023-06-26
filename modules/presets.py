@@ -30,7 +30,7 @@ TEMPLATES_DIR = "templates"
 # 错误信息
 STANDARD_ERROR_MSG = i18n("☹️发生了错误：")  # 错误信息的标准前缀
 GENERAL_ERROR_MSG = i18n("获取对话时发生错误，请查看后台日志")
-SWITCH_ERROR_MSG = i18n("链接错误，已尝试切换至备用线路，请联系管理员重启服务器后再次尝试。若多次重启未果请联系运维人员")
+SWITCH_ERROR_MSG = i18n("网络错误，可能是本地网络问题或服务器问题。请先检查本地网络，同时已尝试切换至备用线路，请联系管理员重启服务器后再次尝试。若多次重启未果请联系运维人员")
 ERROR_RETRIEVE_MSG = i18n("请检查网络连接，或者API-Key是否有效。")
 CONNECTION_TIMEOUT_MSG = i18n("连接超时，无法获取对话。")  # 连接超时
 READ_TIMEOUT_MSG = i18n("读取超时，无法获取对话。")  # 读取超时
@@ -49,7 +49,7 @@ CONCURRENT_COUNT = 100 # 允许同时使用的用户数量
 SIM_K = 5
 INDEX_QUERY_TEMPRATURE = 1.0
 
-CHUANHU_TITLE = i18n("秋水Chat 🚀易县青企协内部特供版")
+CHUANHU_TITLE = i18n("秋水Chat 🚀")
 
 CHUANHU_DESCRIPTION = i18n("")
 
@@ -67,7 +67,7 @@ APPEARANCE_SWITCHER = """
 
 ONLINE_MODELS = [
     "gpt-3.5-turbo",
-    # "gpt-3.5-turbo-16k",
+    "gpt-3.5-turbo-16k",
     "gpt-4",
     "gpt-4-32k",
 ]
